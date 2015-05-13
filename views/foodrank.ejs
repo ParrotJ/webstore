@@ -1,0 +1,41 @@
+<% include header %>
+<div class="wrap">
+	<% for (i in food) { %>
+	<div class="row">
+		<div id="<%= i %>" class="card" style="padding: 1rem 1.5rem">
+			<div class="left" style="width: 50%;">
+				<sapn class="card-title grey-text text-darken-4"><%= food[i].TbNum %></sapn>
+			</div>
+			<div class="right" style="width: 50%;">
+				<span>수량 : <b class="price"><%= food[i].amount %></b><span>
+			</div>
+		</div>
+	<% } %>
+</div>
+
+	<nav class="foot blue">
+		<a href="#" class="brand-logo left modal-trigger">주문 완료</a>
+	</nav>
+
+  	<script>
+	$(document).ready(function(){
+		$(".card").click(function(){
+			var id = $(this).attr("id");
+			var url = location.href+'/del?id='+id;
+
+			$.get(url, function(res) {
+			 	location.reload();
+			});
+		});
+
+		$('nav').click(function(){
+			var id = $(this).attr("id");
+			var url = location.href+'/del?id='+id;
+
+			$.get(url, function(res) {
+			 	location.reload();
+			});
+		});
+	});
+	</script>
+<% include footer %>

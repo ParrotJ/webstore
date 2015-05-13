@@ -1,0 +1,32 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.right span{
+	font-size: 18px;
+	line-height: 33px;
+	float: right;
+}
+.num{
+	float: left !important;
+	display:inline-block;
+	margin-left: -15px;
+}
+
+.foot{
+	position: fixed;
+	bottom:0;
+	width: 100%;
+}
+
+.row {
+	margin-bottom: 0;
+}
+
+.wrap{
+	margin-bottom: 60px;
+}

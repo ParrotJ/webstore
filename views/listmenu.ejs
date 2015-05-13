@@ -1,0 +1,30 @@
+<% include header %>
+<div class="container">
+      <a href="/menuform?mod=add" class="btn-floating btn-large waves-effect waves-light red"><i class="mdi-content-add"></i></a>
+	<table class="striped">
+        <thead>
+          <tr>
+              <th data-field="name">메뉴 이름</th>
+              <th data-field="price">가격</th>
+              <th data-field="stock">재고</th>
+	            <th data-field="max">초기수량</th>
+          </tr>
+        </thead>
+
+        <tbody>
+	  <% for (i in menu) { %>
+	  <tr>
+      	<td>
+      		<a href="/menuform?mod=edit&search=<%= menu[i].name %>">
+      		  <%= menu[i].name %>
+      		</a>
+	      </td>
+	      <td><%= menu[i].price %></td>
+        <td><%= menu[i].stock %></td>
+        <td><%= menu[i].max %></td>	
+	  </tr>
+	  <% } %>
+	</tbody>
+      </table>
+</div>
+<% include footer %>
