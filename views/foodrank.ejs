@@ -19,6 +19,7 @@
 
   	<script>
 	$(document).ready(function(){
+	    setTimeout("history.go(0);",5000);
 		$(".card").click(function(){
 			var id = $(this).attr("id");
 			var url = location.href+'/del?id='+id;

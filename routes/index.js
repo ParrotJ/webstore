@@ -32,10 +32,40 @@ var menus = [];
 var foods = [];
 var TbNum = 0;
 
+//Function
+function BackUp(){
+  var obj = {managers:managers,menus:menus,foods:foods};
+
+  fs.writeFile('set.txt', JSON.stringify(obj),'utf8',function(err){
+    console.log('wrige end');
+  });
+}
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
 });
+
+
+/*  
+    Object Control URL function
+    del
+*/
+
+router.get('/del',function(req,res){
+  var target = req.query.target;
+  var id = req.query.id;
+
+  switch(target){
+    case 'bill':
+      managers.splice(id,1);
+      res.redirect('/manager');
+      break;
+  }
+
+  BackUp();
+})
 
 router.get('/restore',function(req,res){
   fs.readFile('set.txt', 'utf8', function(err, data) {
@@ -127,7 +157,7 @@ router.post('/editmenu', function(req, res) {
 
 
 /* View Manager */
-router.get('/Manager', function(req, res) {
+router.get('/manager', function(req, res) {
 
   res.render('manager',{manager:managers});
 });
@@ -193,12 +223,7 @@ router.post('/transaction',function(req,res){
       console.log('write end');
     });
 
-    var obj = {managers:managers,menus:menus,foods:foods};
-
-    fs.writeFile('set.txt', JSON.stringify(obj),'utf8',function(err){
-      console.log('wrige end');
-    });
-
+    BackUp();
 
     res.send(['주문접수 되었습니다.','/tf'])
    }
