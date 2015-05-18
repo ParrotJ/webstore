@@ -1,0 +1,17 @@
+<% include header %>
+
+<div class="row">
+  <% for(i in tbNum) { %>
+  <a href="/statusList/<%= tbNum[i] %>"> 
+	   <div class="col s4 m3">
+        <div class="card light-blue lighten-1 ">
+          <div class="card-action" style="text-align: center;">
+            <span class="card-title"><%= tbNum[i] %></span>
+          </div>
+        </div>
+      </div>
+    </a>
+  <% } %>     
+</div>
+
+<% include footer %>

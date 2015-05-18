@@ -6,7 +6,7 @@
           <tr>
               <th data-field="name">메뉴 이름</th>
               <th data-field="price">가격</th>
-              <th data-field="stock">재고</th>
+              <th data-field="stock">재고량</th>
 	            <th data-field="max">초기수량</th>
           </tr>
         </thead>
@@ -15,13 +15,14 @@
 	  <% for (i in menu) { %>
 	  <tr>
       	<td>
-      		<a href="/menuform?mod=edit&search=<%= menu[i].name %>">
+      		<a href="/menuform?mod=edit&id=<%= i%>">
       		  <%= menu[i].name %>
       		</a>
 	      </td>
 	      <td><%= menu[i].price %></td>
         <td><%= menu[i].stock %></td>
         <td><%= menu[i].max %></td>	
+        <td style="width:1rem"><a href="/del?target=menu&id=<%= i %>"><i class='mdi-action-delete' style="font-size:1.5rem"></i></a></td>
 	  </tr>
 	  <% } %>
 	</tbody>

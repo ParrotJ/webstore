@@ -3,11 +3,11 @@ var router = express.Router();
 var fs = require('fs');
  
 // Object 
-var manager = {
-	TbNum: "",
- 	Order: "",
-	Sum: "",
-	Time: ""
+var bill = {
+	tbNum: "",
+ 	order: "",
+	sum: "",
+	time: ""
 };
 
 var menu = {
@@ -15,69 +15,236 @@ var menu = {
 	price: "",
 	stock: "",
   max: "",
-};
-
-var food = {
-  name: "",
+  alcohol: "",
   order: [{
-    TbNum: "",
-    amount: ""
+    tbNum: "",
+    amount: "",
+    time:"'"
   }]
 };
 
 // Global Val
-var file = 'order.txt';
-var managers = [];
+var ledger = 'orderList.txt';
+var backup = 'backup.txt';
+var bills = [];
 var menus = [];
-var foods = [];
 var TbNum = 0;
 
 //Function
 function BackUp(){
-  var obj = {managers:managers,menus:menus,foods:foods};
+  var obj = {TbNum:TbNum,bills:bills,menus:menus};
 
-  fs.writeFile('set.txt', JSON.stringify(obj),'utf8',function(err){
+  fs.writeFile(backup, JSON.stringify(obj),'utf8',function(err){
     console.log('wrige end');
   });
 }
 
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
   res.render('index');
+});
+
+router.get('/restore',function(req,res){
+  fs.readFile( backup, 'utf8', function(err, data) {
+    var obj = JSON.parse(data);
+    TbNum = obj.TbNum;
+    bills = obj.bills;
+    menus = obj.menus;
+  });
+
+  res.redirect('/');
+});
+
+
+/* 
+               List View Page              
+*/
+router.get('/menuList', function(req, res) {
+  res.render('List_menu',{menu:menus});
+});
+
+router.get('/billList', function(req, res) {
+  res.render('List_bill',{bill:bills});
+});
+
+router.get('/tfList', function(req, res) {
+  res.render('List_tf',{TbNum:TbNum});
+});
+
+router.get('/foodList',function(req,res){
+  var list = [];
+
+  for(i in menus)
+    if(!menus[i].alcohol) list.push(menus[i]);
+
+  res.render('List_food',{menu:list});
+})
+router.get('/foodList/:name',function(req,res){
+  var list;
+  
+  for(i in menus)
+    if(menus[i].name ==  req.params.name) list = menus[i].order;
+
+  res.render('foodrank',{food:list})
+});
+
+router.get('/statusList',function(req,res){
+  var table = [];
+
+  for(i in menus)
+    for(j in menus[i].order)
+      table.push(menus[i].order[j].tbNum);
+
+  table = table.reduce(function(a,b){if (a.indexOf(b) < 0 ) a.push(b);return a;},[]).sort();
+  
+  res.render('List_tbStatus',{tbNum:table});
+});
+router.get('/statusList/:id',function(req,res){
+  var order = [];
+  var id = req.params.id;
+
+  for(i in menus)
+    for(j in menus[i].order)
+      if(menus[i].order[j].tbNum == id)
+        order.push({name:menus[i].name, amount:menus[i].order[j].amount,time:menus[i].order[j].time});
+
+  res.render('status',{food:order}); 
 });
 
 
 /*  
     Object Control URL function
-    del
+    add, edit, del, transaction
 */
+router.all('/add',function(req,res){
+  switch(req.query.target){
+    case 'menu':
+      menus.push({
+        name: req.body.name,
+        price: req.body.price,
+        stock: req.body.stock,
+        max: req.body.max,
+        alcohol: (req.body.alcohol == 'on')? 'checked':'',
+        order: []
+      });
 
-router.get('/del',function(req,res){
-  var target = req.query.target;
-  var id = req.query.id;
-
-  switch(target){
-    case 'bill':
-      managers.splice(id,1);
-      res.redirect('/manager');
+      res.redirect('/menuList');
       break;
   }
 
   BackUp();
-})
-
-router.get('/restore',function(req,res){
-  fs.readFile('set.txt', 'utf8', function(err, data) {
-    var obj = JSON.parse(data);
-
-    managers = obj.managers;
-    menus = obj.menus;
-    foods = obj.foods;
-  });
-
-  res.redirect('/');
 });
+
+router.all('/edit',function(req,res){
+  var target = req.query.target;
+
+  switch(target){
+    case 'menu':
+      var id = req.query.id;
+
+      menus[id].name = req.body.name;
+      menus[id].price = req.body.price;
+      menus[id].stock = req.body.stock;
+      menus[id].max = req.body.max;
+      menus[id].alcohol = (req.body.alcohol == 'on')? 'checked':'',
+
+      res.redirect('/menuList');       
+      break;
+  }
+
+  BackUp();
+});
+
+router.all('/del',function(req,res){
+  var target = req.query.target;
+
+  switch(target){
+    case 'menu':
+      menus.splice(req.query.id,1);
+
+      res.redirect('/menuList');
+      break;
+    case 'bill':
+      bills.splice(req.query.id,1);
+
+      res.redirect('/billList');
+      break;
+  }
+
+  BackUp();
+});
+
+
+router.post('/transaction',function(req,res){
+  var bill = JSON.parse(req.body.obj);
+
+  if(bill.Order.length == 0) {
+    res.send(['다시 주문해주세요.','Order?TbNum='+bill.TbNum]);
+  }
+  else {
+    var Order = "";
+    
+    if(bill.Service)
+      Order += '<b style="font-size:1.3rem">서비스 </b>';
+
+    for(i in bill.Order){
+      Order += bill.Order[i].name +" "+bill.Order[i].num+"  <b style='font-size:1.3rem'>|</b>  ";
+
+      for(j in menus){
+        if(menus[j].name == bill.Order[i].name && !menus.alcohol){
+          //menus[j].stock -= bill.Order[i].num;
+          menus[j].order.push({
+            tbNum: bill.TbNum,
+            amount: bill.Order[i].num,
+            time: bill.Time
+          });
+        }
+      }  
+    }
+
+    bills.push({
+      tbNum: bill.TbNum,
+      order: Order,
+      sum: bill.Sum,
+      time: bill.Time
+    });
+
+    BackUp();
+    res.send(['주문접수 되었습니다.','/tfList'])
+   }
+});
+
+
+/* 
+    Form 
+*/
+router.get('/menuForm', function(req, res) {
+  var mod = req.query.mod;
+  var dataObj;
+
+  if(mod == "add"){
+    dataObj = {
+      content:menu,
+      mod:'add?target=menu'
+    }
+  }
+  else if(mod =="edit")
+  {  
+    var id = req.query.id;
+    dataObj = {
+      content: menus[id],
+      mod:'edit?target=menu&id='+id
+    }	
+	}
+
+  res.render('Form_menu',dataObj);
+});
+
+router.get('/orderForm', function(req,res) { 
+  res.render('Form_order',{menu:menus});
+});
+
 
 /* Setting Table */ 
 router.get('/SetTable', function(req, res) {
@@ -90,78 +257,8 @@ router.get('/SaveTable', function(req, res) {
   res.redirect('/');
 });
 
-/* Setting Menu */
-router.get('/SetMenu', function(req, res) {
-  console.log(menus);
-
-  res.render('listmenu',{menu:menus});
-});
-
-router.get('/MenuForm', function(req, res) {
-  var mod = req.query.mod;
-
-  if(mod == "add") 
-  	res.render('menuform',{content:menu,mod:mod+"menu",path:""});
-  else if(mod =="edit")
-  {  
-	var search = decodeURI(req.query.search);
-	
-	for(i in menus){
-	  if(menus[i].name == search){
-		var tmp = {
-        	  name: menus[i].name,
-        	  price: menus[i].price,
-        	  stock: menus[i].stock,
-            max: menus[i].max
-        	};
-	  	
-		res.render('menuform',{content:tmp,mod:mod+"menu",path:i});
-		break;	
-    }
-	};
-  }
-});
-
-router.post('/addmenu', function(req, res) {
-  console.log(req.body);
-
-  var menu = {
-	  name: req.body.name,
-	  price: req.body.price,
-	  stock: req.body.stock,
-    max: req.body.stock
-  };
-
-  var food = {
-    name: req.body.name,
-    order: []
-  };
-  
-  menus.push(menu);
-
-  if(req.body.drunk != 'on')
-    foods.push(food);
-
-  res.redirect('/SetMenu');
-});
-
-router.post('/editmenu', function(req, res) {
-  var path = req.body.path;
-
-  //max변수 수정 필요
-  console.log(req.body);
-  menus[path]= req.body;
-
-  res.redirect('/SetMenu');	
-});
-
 
 /* View Manager */
-router.get('/manager', function(req, res) {
-
-  res.render('manager',{manager:managers});
-});
-
 router.get('/read',function(req,res){
   res.render('read');
 });
@@ -173,106 +270,5 @@ router.post('/readOrder',function(req,res){
   res.render('readOrder',{manager:file});
 });
 
-
-/* TF */
-router.get('/tf', function(req, res) {
-  res.render('tf',{TbNum:TbNum});
-});
-
-router.get('/order', function(req,res) { 
-  res.render('order',{menu:menus});
-});
-
-router.post('/transaction',function(req,res){
-  var bill = JSON.parse(req.body.obj);
- 
-  console.log(bill);
-
-  if(bill.Order.length == 0) {
-    res.send(['다시 주문해주세요.','Order?TbNum='+bill.TbNum]);
-  }
-  else {
-    var Order = "";
-    console.log(bill.Service);
-    if(bill.Service)
-      Order += '<b style="font-size:1.3rem">서비스 </b>';
-
-    for(i in bill.Order){
-      Order += bill.Order[i].name +" "+bill.Order[i].num+"  <b style='font-size:1.3rem'>|</b>  ";
-
-      for(j in foods){
-        if(foods[j].name == bill.Order[i].name){
-          var foodrank = foods[j].order;
-
-          foodrank.push({
-            TbNum: bill.TbNum,
-            amount: bill.Order[i].num
-          });
-        }
-      }  
-    }
-
-    managers.push({
-      TbNum: bill.TbNum,
-      Order: Order,
-      Sum: bill.Sum,
-      Time: bill.Time
-    });
-
-    fs.writeFile(file, JSON.stringify(managers), 'utf8', function(error){
-      console.log('write end');
-    });
-
-    BackUp();
-
-    res.send(['주문접수 되었습니다.','/tf'])
-   }
-});
-
-/* Food */
-router.get('/Food',function(req,res){
-  res.render('food',{menu:foods});
-});
-
-router.get('/Food/:name',function(req,res){
-  var list;
-  
-  for(i in foods)
-    if(foods[i].name ==  req.params.name) list = foods[i].order;
-
-  res.render('foodrank',{food:list})
-});
-
-router.get('/Food/:name/del',function(req,res){
-  var id = req.query.id;
-  var name = req.params.name;
-
-  for(i in foods){
-    if(foods[i].name == name) {
-      var list = foods[i].order;
-      
-      list.splice(id,1);
-    }
-  }
-
-  res.send('');
-});
-
-/* tableState */
-router.get('/tablelist',function(req,res){
-  res.render('tablelist',{TbNum:TbNum});
-});
-
-router.get('/status',function(req,res){
-  var order = [];
-  var Tb = req.query.TbNum;
-
-  for(i in foods)
-    for (j in foods[i].order)
-      if(foods[i].order[j].TbNum == Tb)
-        order.push({name:foods[i].name, amount:foods[i].order[j].amount});
-
-  res.render('status',{food:order}); 
-});
 
 module.exports = router;

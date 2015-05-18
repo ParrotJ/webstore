@@ -1,20 +1,13 @@
 <% include header %>
+
 	<% for (i in menu) { %>
-	<div class="row">
+	<a href="/foodList/<%= menu[i].name %>">
 		<div class="card" style="padding: 1rem 1.5rem">
 			<div class="left" style="width: 50%;">
 				<sapn class="card-title grey-text text-darken-4"><%= menu[i].name %></sapn>
 			</div>
 		</div>
+	</a>
 	<% } %>
-
-  	<script>
-	$(document).ready(function(){
-		$(".card").click(function(){
-			var name = $(this).children('.left').children('.card-title').html();
-     		
-     		document.location.href ='/Food/'+name;
-		});
-	});
-	</script>
+	
 <% include footer %>

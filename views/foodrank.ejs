@@ -1,15 +1,18 @@
 <% include header %>
+
 <div class="wrap">
 	<% for (i in food) { %>
 	<div class="row">
 		<div id="<%= i %>" class="card" style="padding: 1rem 1.5rem">
 			<div class="left" style="width: 50%;">
-				<sapn class="card-title grey-text text-darken-4"><%= food[i].TbNum %></sapn>
+				<sapn class="card-title grey-text text-darken-4"><%= food[i].tbNum %></sapn>
 			</div>
 			<div class="right" style="width: 50%;">
-				<span>수량 : <b class="price"><%= food[i].amount %></b><span>
+				<span class="num"><%= food[i].time %></span>
+				<span>수량 : <b class="price"><%= food[i].amount %></b></span>
 			</div>
 		</div>
+	</div>
 	<% } %>
 </div>
 
@@ -19,10 +22,11 @@
 
   	<script>
 	$(document).ready(function(){
-	    setTimeout("history.go(0);",5000);
+	    //setTimeout("history.go(0);",5000);
+
 		$(".card").click(function(){
 			var id = $(this).attr("id");
-			var url = location.href+'/del?id='+id;
+			var url = location.origin+'/del?target=food&id='+id;
 
 			$.get(url, function(res) {
 			 	location.reload();
@@ -30,12 +34,16 @@
 		});
 
 		$('nav').click(function(){
-			var id = $(this).attr("id");
-			var url = location.href+'/del?id='+id;
+			var id = $('#0');
 
-			$.get(url, function(res) {
-			 	location.reload();
-			});
+			if (id != 'undefinded'){
+				var url = location.origin+'/del?target=food&id='+0;
+
+				$.get(url, function(res) {
+				 	location.reload();
+				});
+			}
+			
 		});
 	});
 	</script>
