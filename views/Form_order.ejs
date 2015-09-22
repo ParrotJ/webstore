@@ -87,7 +87,7 @@
 			bill.TbNum = location.href.split('=')[1];
 			bill.Time = nowAll;
 
-			$.post('/transaction',{'obj':JSON.stringify(bill)},function(req){
+			$.post('/add?type=bill',{'obj':JSON.stringify(bill)},function(req){
 				alert(req[0]);
 				location.href = req[1];
 			});
@@ -102,7 +102,7 @@
 			bill.Sum = 0;
 			bill.Service = true;
 
-			$.post('/transaction',{'obj':JSON.stringify(bill)},function(req){
+			$.post('/add?type=bill',{'obj':JSON.stringify(bill)},function(req){
 				alert(req[0]);
 				location.replace(req[1]);
 			});

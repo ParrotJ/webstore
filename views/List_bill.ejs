@@ -18,11 +18,11 @@
   <tbody>
     <% for (var i=bill.length-1; i >= 0; i--) { %>
     <tr class='data' id='<%= i %>'>
-        <td><%= bill[i].TbNum %></td>
-        <td><%- bill[i].Order %></td>
-        <td id='val'><%= bill[i].Sum %></td>
-        <td><%= bill[i].Time %></td>
-        <td style="width:1rem"><a href="/del?target=bill&id=<%= i %>"><i class='mdi-action-delete' style="font-size:1.5rem"></i></a></td>
+        <td><%= bill[i].tbNum %></td>
+        <td><%- bill[i].order %></td>
+        <td id='val'><%= bill[i].sum %></td>
+        <td><%= bill[i].time %></td>
+        <td style="width:1rem"><a href="/del?type=bill&id=<%= i %>"><i class='mdi-action-delete' style="font-size:1.5rem"></i></a></td>
     </tr>
     <% } %>
   </tbody>
@@ -32,12 +32,8 @@
 
 <script>
   //콤마찍기
-  function numberFormat(num) {
-    var pattern = /(-?[0-9]+)([0-9]{3})/;
-    while(pattern.test(num)) {
-      num = num.replace(pattern,"$1,$2");
-    }
-    return num;
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   $(document).ready(function(){
@@ -45,9 +41,11 @@
     
     var sum = 0;
     $('.data').each(function(){
-      sum += $(this).children('#val').html()*1;
+      val = $(this).children('#val').html();
+      sum += val*1;
+      $(this).children('#val').html(numberWithCommas(val));
     });
-    $('#sum').html(sum);
+    $('#sum').html(numberWithCommas(sum));
   });
 </script>
 

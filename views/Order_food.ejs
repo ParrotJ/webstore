@@ -1,9 +1,9 @@
 <% include header %>
 
-<div class="wrap">
+<div class="wrap" data-index="<%= index %>">
 	<% for (i in food) { %>
 	<div class="row">
-		<div id="<%= i %>" class="card" style="padding: 1rem 1.5rem">
+		<div id="<%= i %>" class="card" style="padding: 1rem 1.5rem; p">
 			<div class="left" style="width: 50%;">
 				<sapn class="card-title grey-text text-darken-4"><%= food[i].tbNum %></sapn>
 			</div>
@@ -16,19 +16,23 @@
 	<% } %>
 </div>
 
-	<nav class="foot blue">
-		<a href="#" class="brand-logo left modal-trigger">주문 완료</a>
-	</nav>
+<nav class="foot blue">
+	<a href="#" class="brand-logo left modal-trigger">주문 완료</a>
+</nav>
 
-  	<script>
+
+<script>
 	$(document).ready(function(){
-	    //setTimeout("history.go(0);",5000);
+		setTimeout("history.go(0);",5000);
+		var index = $('.wrap').data('index');
 
 		$(".card").click(function(){
 			var id = $(this).attr("id");
-			var url = location.origin+'/del?target=food&id='+id;
 
-			$.get(url, function(res) {
+			var url = location.origin+'/del?type=food&index='+index+'&id='+id;
+
+			$.get(url, function(data) {
+				alert(data)
 			 	location.reload();
 			});
 		});
@@ -37,14 +41,15 @@
 			var id = $('#0');
 
 			if (id != 'undefinded'){
-				var url = location.origin+'/del?target=food&id='+0;
+				var url = location.origin+'/del?type=food&index='+index+'&id='+0;
 
-				$.get(url, function(res) {
+				$.get(url, function(data) {
+					alert(data);
 				 	location.reload();
 				});
 			}
 			
 		});
 	});
-	</script>
+</script>
 <% include footer %>

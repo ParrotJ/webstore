@@ -1,1 +1,0 @@
-{"managers":[{"TbNum":"1","Order":"소주 2  <b style='font-size:1.3rem'>|</b>  맥주 1  <b style='font-size:1.3rem'>|</b>  ","Sum":12000,"Time":"0:15:57 "}],"menus":[{"name":"소주","price":"4000","stock":"150","max":"150"},{"name":"맥주","price":"4000","stock":"500","max":"500"}],"foods":[]}

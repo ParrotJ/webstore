@@ -1,13 +1,13 @@
 <% include header %>
 <div class="container">
-      <a href="/menuform?mod=add" class="btn-floating btn-large waves-effect waves-light red"><i class="mdi-content-add"></i></a>
+      <a href="/menuForm?mod=add" class="btn-floating btn-large waves-effect waves-light red"><i class="mdi-content-add"></i></a>
 	<table class="striped">
         <thead>
           <tr>
               <th data-field="name">메뉴 이름</th>
               <th data-field="price">가격</th>
               <th data-field="stock">재고량</th>
-	            <th data-field="max">초기수량</th>
+	            <th data-field="max">주문 수량</th>
           </tr>
         </thead>
 
@@ -22,7 +22,7 @@
 	      <td><%= menu[i].price %></td>
         <td><%= menu[i].stock %></td>
         <td><%= menu[i].max %></td>	
-        <td style="width:1rem"><a href="/del?target=menu&id=<%= i %>"><i class='mdi-action-delete' style="font-size:1.5rem"></i></a></td>
+        <td style="width:1rem"><a href="/del?type=menu&id=<%= i %>"><i class='mdi-action-delete' style="font-size:1.5rem"></i></a></td>
 	  </tr>
 	  <% } %>
 	</tbody>
