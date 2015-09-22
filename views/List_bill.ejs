@@ -1,6 +1,10 @@
 <% include header %>
 
 <nav class="top blue">
+  <ul id="nav-mobile" class="left">
+    <li><a href="#" onclick="time=setTimeout('history.go(0);',5000); return false;">자동 새로고침</a></li>
+    <li><a href="#" onclick="window.clearTimeout(time); return false;">일시정지</a></li>
+  </ul>
   <a class="brand-logo right" style="margin-right: 2rem">총계 : <sapn id="sum"></span>w</a>
 </nav>
 
@@ -31,13 +35,19 @@
 
 
 <script>
+  var time = setTimeout("history.go(0);",5000);
   //콤마찍기
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  $('li').click(function(){
+    $('li').each(function(){
+      $(this).removeClass('active');
+    });
+    $(this).addClass('active');
+  });
   $(document).ready(function(){
-    setTimeout("history.go(0);",5000);
     
     var sum = 0;
     $('.data').each(function(){
