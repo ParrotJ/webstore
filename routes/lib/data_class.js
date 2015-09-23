@@ -153,8 +153,15 @@ module.exports = {
     		var cancel = this.bills[id].del;
 
     		for( x in cancel )
-    			if ( menu[cancel[x].id] != undefined) 
+    			if ( menu[cancel[x].id] != undefined){
     				menu[cancel[x].id].stock += cancel[x].amount*1;
+
+    				for( y in menu[cancel[x].id].order ){
+    					console.log(this.bills[id].time, menu[cancel[x].id].order[y].time);
+    					if( this.bills[id].time == menu[cancel[x].id].order[y].time )
+    						menu[cancel[x].id].order.splice(y,1);
+    				}
+    			}
     		
 	      this.bills.splice(id,1);
 
