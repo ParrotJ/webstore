@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8080');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -107,10 +107,10 @@ Object.keys(ifaces).forEach(function (ifname) {
 
     if (alias >= 1) {
       // this single interface has multiple ipv4 addresses
-      console.log("접속하는 주소: "+iface.address);
+      console.log("접속하는 주소: "+iface.address+":3000");
     } else {
       // this interface has only one ipv4 adress
-      console.log("접속하는 주소: "+iface.address);
+      console.log("접속하는 주소: "+iface.address+":3000");
     }
   });
 });
