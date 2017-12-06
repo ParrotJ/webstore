@@ -4,11 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var hbs = require('hbs');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var r_index = require('./routes/index');
+var r_users = require('./routes/users');
+var r_admin = require('./routes/admin');
+var r_customer = require('./routes/customer');
+var r_server = require('./routes/server');
 
 var app = express();
+
+
+// hbs configuration
+var hbs = require('hbs');
+hbs.registerPartials(__dirname + '/views/admin');
 
 // Socket configuration
 var server = require('http').Server(app);
@@ -27,8 +36,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+app.use('/', r_index);
+app.use('/users', r_users);
+app.use('/admin', r_admin);
+app.use('/customer', r_customer);
+app.use('/server', r_server);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

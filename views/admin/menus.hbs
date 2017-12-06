@@ -1,0 +1,45 @@
+<div class="bg-container pg-menus">
+  <div class="container">
+    <h2 class="title">메뉴목록</h2>
+    <div class="content">
+      <a class="btn-add_menu btn-floating btn-large waves-effect waves-light red"
+          href="menus/add">
+        <i class="material-icons">add</i>
+      </a>
+
+      <div class="row">
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th>메뉴 이름</th>
+              <th>원가</th>
+              <th>판매가</th>
+              <th>초기수량</th>
+              <th>재고량</th>
+              <th width="95"></th>
+            </tr>
+          </thead>
+          <tbody class="wrap-item">
+            <tr>
+              <td>메뉴</td>
+              <td>100</td>
+              <td>1000</td>
+              <td>300</td>
+              <td>100</td>
+              <td>
+                <a href="edit.html?id={{index}}"
+                   class="btn-floating green">
+                  <i class="material-icons gray">edit</i>
+                </a>
+                <a href="routes.php?c=contact&a=del&id={{index}}"
+                   class="btn-floating blue">
+                  <i class="material-icons">delete</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

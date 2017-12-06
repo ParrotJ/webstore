@@ -1,0 +1,95 @@
+.ab-center {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  margin: auto;
+}
+
+.wrap-tail {
+  max-width: 640px;
+  min-height: 100%;
+  margin: auto;
+  background: rgba(0,0,0,.8);
+}
+
+.wrap-tail h1 {
+  display: block;
+  margin: 0; padding: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.wrap-tail .row{
+  margin-bottom: 0;
+}
+
+.tail {
+  position: relative;
+  height: 0;
+  padding-bottom: 50%!important;
+}
+.num.tail {
+  padding-bottom: 33.33%!important;
+}
+
+.tail-inner {
+  width: 90%; height: 90%;
+}
+
+.tail-inner .material-icons {
+  top: -10px;
+  width: 70px; height: 70px;
+  font-size: 5rem;
+  color: #fff;
+}
+
+.tail-inner .text {
+  position: absolute;
+  left: 10px; bottom: 10px;
+  color: #fff;
+}
+
+.tail-inner .number-text {
+  width: 40px; height: 40px;
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+}
+
+
+.bg-container {
+  padding: .1px;
+  width: 100%;
+  min-height: 900px;
+  background-color: #f5f5f5;
+}
+
+.bg-container .container {
+  margin: 35px auto 60px;
+  min-height: 630px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.bg-container .title {
+  margin: 0; padding: 5px 0 0 20px;
+  line-height: 50px;
+  font-size: 22px;
+  font-weight: bold;
+  border-bottom: 1px solid #cdcdcd;
+}
+.bg-container .content {
+  padding: 30px;
+}
+
+
+
+
+.pg-menus .container {
+  position: relative;
+  padding-bottom: 80px;
+}
+.pg-menus .btn-add_menu {
+  position: absolute;
+  bottom: 12px; right: 10px;
+}

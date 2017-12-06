@@ -1,2 +1,66 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="wrap-tail">
+  <h1>관리자</h1>
+  <div class="row">
+    <div class="tail col s6">
+      <a href="#mdl-set_table" class="modal-trigger">
+        <div class="tail-inner ab-center cyan darken-1">
+          <i class="ab-center material-icons">view_module</i>
+          <div class="text">테이블 설정</div>
+        </div>
+      </a>
+    </div>
+    <div class="tail col s6">
+      <a href="/admin/menus">
+        <div class="tail-inner ab-center cyan darken-1">
+          <i class="ab-center material-icons">restaurant_menu</i>
+          <div class="text">메뉴 설정</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="tail col s6">
+      <a href="#">
+        <div class="tail-inner ab-center cyan darken-1">
+          <i class="ab-center material-icons">book</i>
+          <div class="text">회계</div>
+        </div>
+      </a>
+    </div>
+    <div class="tail col s6">
+      <a href="/customer">
+        <div class="tail-inner ab-center cyan darken-1">
+          <i class="ab-center material-icons">group</i>
+          <div class="text">손님</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="tail col s6">
+      <a href="/server">
+        <div class="tail-inner ab-center cyan darken-1">
+          <i class="ab-center material-icons">transfer_within_a_station</i>
+          <div class="text">서버</div>
+        </div>
+      </a>
+    </div>
+    <div class="tail col s6">
+      <a href="#">
+        <div class="tail-inner ab-center cyan darken-1">
+          <i class="ab-center material-icons">restaurant</i>
+          <div class="text">주방</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+{{> table}}
+
+<script>
+$(document).ready(function(){
+
+  $('.modal').modal();
+});
+</script>
