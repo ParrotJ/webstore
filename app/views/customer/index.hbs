@@ -1,0 +1,14 @@
+<div class="wrap-tile">
+    <h1>손님 테이블</h1>
+    <div class="row">
+        {{#times table_num}}
+            <div class="num tile col s4 ">
+                <a href="customer/order?tnum={{this}}">
+                    <div class="tile-inner ab-center cyan darken-1">
+                        <div class="ab-center number-text">{{this}}</div>
+                    </div>
+                </a>
+            </div>
+        {{/times}}
+    </div>
+</div>

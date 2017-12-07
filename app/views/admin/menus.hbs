@@ -11,35 +11,55 @@
         <table class="highlight">
           <thead>
             <tr>
-              <th>메뉴 이름</th>
-              <th>원가</th>
-              <th>판매가</th>
-              <th>초기수량</th>
-              <th>재고량</th>
-              <th width="95"></th>
+                <th>메뉴 이름</th>
+                <th>초기수량</th>
+                <th>재고량</th>
+                <th>원가</th>
+                <th>판매가</th>
+                <th width="95"></th>
             </tr>
           </thead>
           <tbody class="wrap-item">
-            <tr>
-              <td>메뉴</td>
-              <td>100</td>
-              <td>1000</td>
-              <td>300</td>
-              <td>100</td>
-              <td>
-                <a href="edit.html?id={{index}}"
-                   class="btn-floating green">
-                  <i class="material-icons gray">edit</i>
-                </a>
-                <a href="routes.php?c=contact&a=del&id={{index}}"
-                   class="btn-floating blue">
-                  <i class="material-icons">delete</i>
-                </a>
-              </td>
-            </tr>
+          {{#each items}}
+              <tr>
+                  <td>{{name}}</td>
+                  <td>{{init}}</td>
+                  <td>{{stock}}</td>
+                  <td>{{price}}</td>
+                  <td>{{cost}}</td>
+                  <td>
+                      <a href="menus/edit/{{id}}"
+                         class="btn-floating green">
+                          <i class="material-icons gray">edit</i>
+                      </a>
+                      <a data-id="{{id}}"
+                         class="btn-remove_menu btn-floating blue">
+                          <i class="material-icons">delete</i>
+                      </a>
+                  </td>
+              </tr>
+          {{/each}}
           </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+       $('.btn-remove_menu').click(function(){
+           var id = $(this).data('id');
+
+           $.ajax({
+               method: "DELETE",
+               url: '/admin/menus',
+               data: {id : id},
+           }).done(function (rtn) {
+               location.reload();
+           });
+
+           return false;
+       }) ;
+    });
+</script>

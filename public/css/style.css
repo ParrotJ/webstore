@@ -1,3 +1,14 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+.modal.bottom-sheet {
+  max-height: 85%;
+}
+
+
 .ab-center {
   position: absolute;
   top: 0; bottom: 0;
@@ -5,55 +16,76 @@
   margin: auto;
 }
 
-.wrap-tail {
+.wrap-tile {
+  position: absolute;
+  left: 0; right: 0;
+  margin: auto;
   max-width: 640px;
   min-height: 100%;
-  margin: auto;
+  width: 100%;
   background: rgba(0,0,0,.8);
 }
 
-.wrap-tail h1 {
+.wrap-tile h1 {
   display: block;
   margin: 0; padding: 1rem;
   font-size: 1.5rem;
   color: #fff;
 }
 
-.wrap-tail .row{
+.wrap-tile .row{
   margin-bottom: 0;
 }
 
-.tail {
+.tile {
   position: relative;
   height: 0;
   padding-bottom: 50%!important;
 }
-.num.tail {
+.num.tile {
   padding-bottom: 33.33%!important;
 }
 
-.tail-inner {
+.tile-inner {
   width: 90%; height: 90%;
 }
 
-.tail-inner .material-icons {
+.tile-inner .material-icons {
   top: -10px;
   width: 70px; height: 70px;
   font-size: 5rem;
   color: #fff;
 }
 
-.tail-inner .text {
+.tile-inner .text {
   position: absolute;
   left: 10px; bottom: 10px;
   color: #fff;
 }
 
-.tail-inner .number-text {
+.tile-inner .number-text {
   width: 40px; height: 40px;
   text-align: center;
   font-size: 2rem;
   color: #fff;
+}
+
+.tile .notice {
+  display: none;
+  position: absolute;
+  bottom: 5%; right: 15%;
+  width: 30px; height: 30px;
+  background-color: #9a1616 !important;
+  text-align: center;
+  color: #fff;
+}
+.tile.notice-active .notice {
+  display: block;
+}
+
+.tile .notice.call i{
+  font-size: 20px;
+  line-height: 30px;
 }
 
 
@@ -83,8 +115,6 @@
 }
 
 
-
-
 .pg-menus .container {
   position: relative;
   padding-bottom: 80px;
@@ -92,4 +122,60 @@
 .pg-menus .btn-add_menu {
   position: absolute;
   bottom: 12px; right: 10px;
+}
+
+
+.pg-order.wrap-tile {
+  padding-bottom: 4rem;
+}
+.menu.tile{
+  padding-bottom: 33.33%!important;
+}
+.menu.tile .name{
+  position: absolute;
+  left: 1.5rem; bottom: 1.5rem;
+  width: 80%;  height: 1.5rem;
+  font-size: 1.3rem;
+  color: #fff;
+}
+.menu.tile .num {
+  width: 40px; height: 40px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+.menu.tile .btn-minus{
+  position: absolute; left: 0;
+  margin: 2% 0 2% 5%;
+  width: 45%; height: 90%;
+}
+.menu.tile .btn-plus{
+  position: absolute; right: 0;
+  margin: 2% 5% 2% 0;
+  width: 45%; height: 90%;
+}
+.bottom-summary {
+  position: absolute;
+  bottom: 0; left: 0;
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.btn-order {
+  position: absolute;
+  bottom: 0; right: 0;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffac80;
+}
+
+#btn-call_server {
+  position: absolute;
+  top: 0;  right: 0;
+}
+#btn-call_server i {
+  padding: 1rem;
+  color:#fff;
 }

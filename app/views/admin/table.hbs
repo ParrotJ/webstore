@@ -2,14 +2,67 @@
 <!-- Modal Structure -->
 <div id="mdl-set_table" class="modal bottom-sheet">
   <div class="modal-content">
-    <h4>테이블 설정</h4>
-    <form id="frm_table">
-      <p class="range-field">
-        <input type="range" id="test5" min="0" max="100" />
+      <h4>테이블 설정</h4>
+      <div id="table-slider"></div>
+      <p>
+          <span id="lower-value" class="left">40</span>
       </p>
-    </form>
+
   </div>
   <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">설정</a>
+    <a id="sbm-table" class="modal-action modal-close waves-effect waves-green btn-flat">설정</a>
   </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var slider = document.getElementById('table-slider');
+        var nodes = [
+            document.getElementById('lower-value'), // 0
+        ];
+        var table_num = 0;
+
+        $.ajax({
+            method: "GET",
+            url: '/admin/table',
+            dataType: 'JSON',
+        }).done(function (rtn) {
+            table_num = rtn.num;
+
+
+            noUiSlider.create(slider, {
+                start: rtn.num,
+                connect: true,
+                step: 1,
+                orientation: 'horizontal', // 'horizontal' or 'vertical'
+                range: {
+                    'min': 0,
+                    'max': 80
+                }
+            });
+
+            // Display the slider value and how far the handle moved
+            // from the left edge of the slider.
+            slider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
+                nodes[handle].innerHTML = '<b>value: </b>' + values[handle];
+            });
+        });
+
+        $('#sbm-table').click(function(){
+            var num = slider.noUiSlider.get();
+
+            if(num != table_num) {
+                table_num = num;
+
+                $.ajax({
+                    method: "PUT",
+                    url: '/admin/table',
+                    data: { tnum: num },
+                    dataType: 'JSON',
+                }).done(function (rtn) {
+                    console.log(rtn);
+                });
+            }
+        });
+    });
+</script>

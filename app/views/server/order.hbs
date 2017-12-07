@@ -1,0 +1,155 @@
+<div class="pg-order wrap-tile" data-tnum="{{table_num}}">
+    <h1>주문하기 - {{table_num}}번 테이블</h1>
+    <div class="row">
+    {{#each items}}
+        <div class="menu tile col s12" data-id="{{id}}" data-name="{{name}}" data-cost="{{cost}}" data-num="0">
+            <div class="tile-inner ab-center cyan darken-1">
+                <div class="name">{{name}} : {{numberWithCommas cost}}</div>
+                <div class="num ab-center">0</div>
+            </div>
+            <div class="btn-minus"></div>
+            <div class="btn-plus"></div>
+        </div>
+    {{/each}}
+    </div>
+
+    <div class="bottom-summary">
+        <span class="prefix">합계 : </span><span class="value" data-sum="0">0</span>
+    </div>
+    <a href="#mdl-summary" class="btn-order modal-trigger">주문하기</a>
+</div>
+
+<!-- Modal Structure -->
+<div id="mdl-summary" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h5>영수증</h5>
+        <table>
+            <thead>
+            <tr>
+                <th>상품명</th>
+                <th>단가</th>
+                <th>수량</th>
+                <th>금액</th>
+            </tr>
+            </thead>
+            <tbody class="summary-body">
+            </tbody>
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <a id="submit-order" class="modal-action modal-close waves-effect waves-green btn-flat">주문</a>
+    </div>
+</div>
+
+<script id="summary_item-template" type="text/x-handlebars-template">
+    \{{#each list}}
+        <tr>
+            <td>\{{name}}</td>
+            <td>\{{cost}}</td>
+            <td>\{{num}}</td>
+            <td>\{{sum}}</td>
+        </tr>
+    \{{/each}}
+        <tr>
+            <th colspan="3">합계</th>
+            <td colspan="1">\{{sum}}</td>
+        </tr>
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        var source   = document.getElementById("summary_item-template").innerHTML;
+        var template = Handlebars.compile(source);
+
+        $('#mdl-summary').modal({
+            ready: function(val){
+                var sum = 0;
+                var items = $.map($('.menu.tile'),function(val){
+                    var $tile = $(val);
+                    var name = $tile.data('name');
+                    var num = $tile.data('num');
+                    var cost = $tile.data('cost');
+
+                    if(num > 0) {
+                        sum += cost*num;
+                        return {
+                            name: name,
+                            num: num,
+                            cost: numberWithCommas(cost),
+                            sum: numberWithCommas(cost*num),
+                        };
+                    }
+                });
+                var html = template({list:items,sum:numberWithCommas(sum)});
+                $('.summary-body').html(html);
+            },
+        });
+
+        $('#submit-order').click(function(){
+            var num = $('.pg-order').data('tnum');
+            var sum = 0;
+            var items = $.map($('.menu.tile'),function(val){
+                var $tile = $(val);
+                var id = $tile.data('id');
+                var num = $tile.data('num');
+                var cost = $tile.data('cost');
+
+                if(num > 0) {
+                    sum += cost*num;
+                    return {
+                        id: id,
+                        num: num,
+                    };
+                }
+            });
+
+            $.ajax({
+                method: "PUT",
+                url: '/server/order',
+                data: {
+                    tnum: num,
+                    data:items,
+                    sum: sum,
+                },
+            }).done(function (rtn) {
+                console.log(rtn);
+            });
+        });
+
+        $('.btn-minus').click(function () {
+            const $tile = $($(this).parents('.menu'));
+            const $display = $($tile.find('.num'));
+            const $sum  = $('.bottom-summary .value');
+            var cost = $tile.data('cost');
+            var num = $tile.data('num');
+            var sum = $sum.data('sum');
+
+            if(num > 0){
+                num--;
+                $display.html(num);
+                $sum.html(numberWithCommas(sum-cost));
+                $tile.data('num',num);
+                $sum.data('sum', sum-cost);
+            }
+        });
+        $('.btn-plus').click(function () {
+            const $tile = $($(this).parents('.menu'));
+            const $display = $($tile.find('.num'));
+            const $sum  = $('.bottom-summary .value');
+            var cost = $tile.data('cost');
+            var num = $tile.data('num');
+            var sum = $sum.data('sum');
+
+            num++;
+            $display.html(num);
+            $sum.html(numberWithCommas(sum+cost));
+            $tile.data('num', num);
+            $sum.data('sum', sum+cost);
+        });
+    });
+</script>

@@ -1,26 +1,38 @@
-<div class="wrap-tail">
-  <h1>손님 테이블</h1>
+<div class="wrap-tile">
+  <h1>서버 테이블</h1>
   <div class="row">
-    <div class="num tail col s4 ">
-      <a href="#">
-        <div class="tail-inner ab-center cyan darken-1">
-          <div class="ab-center number-text">1</div>
-        </div>
-      </a>
-    </div>
-    <div class="num tail col s4">
-      <a href="#">
-        <div class="tail-inner ab-center cyan darken-1">
-          <div class="ab-center number-text">2</div>
-        </div>
-      </a>
-    </div>
-    <div class="num tail col s4">
-      <a href="#">
-        <div class="tail-inner ab-center cyan darken-1">
-          <div class="ab-center number-text">3</div>
-        </div>
-      </a>
-    </div>
+      {{#times table_num}}
+          <div class="num tile col s4" data-num="{{this}}">
+              <a href="server/order?tnum={{this}}">
+                  <div class="tile-inner ab-center cyan darken-1">
+                      <div class="ab-center number-text">{{this}}</div>
+                  </div>
+              </a>
+              <div class="notice call"><i class="material-icons">announcement</i></div>
+          </div>
+      {{/times}}
   </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var socket = io.connect();
+        socket.emit('join:booth',{bid:1});
+        socket.on('call:server',function (data) {
+            $('.tile').removeClass('notice-active');
+
+            $.map(data,function(num){
+                $('.tile:eq('+(num-1)+')').addClass('notice-active');
+            });
+        });
+
+        $(document).on('click','.tile.notice-active',function(e){
+            e.preventDefault();
+            var $this = $(e.currentTarget);
+            var tnum = $this.data('num');
+
+            socket.emit('callOk:server',{bid:1,tnum:tnum});
+            alert(tnum+'번 테이블의 호출을 확인하셨습니다.');
+        });
+    });
+</script>
