@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var io  = require('../app').io;
+var io  = require('../../app').io;
 
 /* GET home page. */
 router.get('/menus', function(req, res, next) {

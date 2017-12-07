@@ -6,18 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
 
-var r_index = require('./routes/index');
-var r_users = require('./routes/users');
-var r_admin = require('./routes/admin');
-var r_customer = require('./routes/customer');
-var r_server = require('./routes/server');
+var r_index = require('./app/routes/index');
+var r_users = require('./app/routes/users');
+var r_admin = require('./app/routes/admin');
+var r_customer = require('./app/routes/customer');
+var r_server = require('./app/routes/server');
 
 var app = express();
 
 
 // hbs configuration
 var hbs = require('hbs');
-hbs.registerPartials(__dirname + '/views/admin');
+hbs.registerPartials(path.join(__dirname, 'app/views/admin'));
 
 // Socket configuration
 var server = require('http').Server(app);
@@ -25,7 +25,7 @@ var io = require('socket.io')(server);
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
