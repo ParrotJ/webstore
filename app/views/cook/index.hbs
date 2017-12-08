@@ -1,0 +1,89 @@
+<div class="wrap-tile">
+    <h1>주방</h1>
+    <a id="btn-set_filter" class="btn-haeder-left modal-trigger" href="#mdl-set_filter">
+        <i class="material-icons">settings</i>
+    </a>
+    <div id="wrap-item" class="row">
+      <div v-for="(item,index) in items"
+            v-show="filterCheck(item)"
+            @click="callServer(item,index)"
+            class="menu tile col s12">
+            <div class="tile-inner ab-center cyan darken-1">
+                <div class="name">\{{item.tnum}}번 테이블</div>
+                <div class="table num ab-center">\{{item.name}} : \{{item.num}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="mdl-set_filter" class="modal bottom-sheet">
+    <div id="mdl-set_filter-body" class="modal-content">
+      <h5>음식 필터 설정</h5>
+      <div class="collection">
+        <a v-for="(item,index) in initData" class="collection-item" @click="setFilter(item)">
+          <span class="badge" v-show="showCheck(item)">
+            <i class="material-icons">visibility</i>
+          </span>
+          \{{item.name}}
+        </a>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">확인</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#mdl-set_filter').modal();
+        var filter_menu = {
+          initData: [],
+          list : [],
+        };
+        window.a =filter_menu;
+
+        var socket = io.connect();
+        var v_order_menu = new Vue({
+          el: '#wrap-item',
+          data: {
+            items: []
+          },
+          methods: {
+            callServer: function(data,index){
+              socket.emit('cookOk:cook',{bid:1,item:data});
+              Vue.delete(this.items, index);
+            },
+            filterCheck: function(data){
+              var index = filter_menu.list.indexOf(data.mid);
+              if(index !== -1) return true;
+              else return false;
+            }
+          }
+        });
+        var v_set_filter = new Vue({
+          el:'#mdl-set_filter-body',
+          data: function() { return filter_menu; },
+          methods: {
+            setFilter: function(data){
+              var index = filter_menu.list.indexOf(data.id);
+              if(index !== -1) filter_menu.list.splice(index, 1);
+              else filter_menu.list.push(data.id);
+            },
+            showCheck: function(data){
+              var index = filter_menu.list.indexOf(data.id);
+              if(index !== -1) return true;
+              else return false;
+            }
+          }
+        })
+
+        socket.emit('join:booth-cook',{bid:1});
+        socket.on('order:cook',function (data) {
+          v_order_menu.items = data;
+        });
+        socket.on('initFilter:cook',function(data){
+          filter_menu.initData = data;
+        });
+    });
+</script>

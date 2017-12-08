@@ -1,6 +1,6 @@
 <div class="pg-order wrap-tile" data-tnum="{{table_num}}">
     <h1>주문하기 - {{table_num}}번 테이블</h1>
-    <a id="btn-call_server" href="#">
+    <a id="btn-call_server" class="btn-haeder-left" href="#">
         <i class="material-icons">notifications</i>
     </a>
     <div class="row">
@@ -38,7 +38,6 @@
             <tbody class="summary-body">
             </tbody>
         </table>
-
     </div>
     <div class="modal-footer">
         <a id="submit-order" class="modal-action modal-close waves-effect waves-green btn-flat">주문</a>
@@ -68,6 +67,16 @@
         var source   = document.getElementById("summary_item-template").innerHTML;
         var template = Handlebars.compile(source);
         var socket = io.connect();
+
+        socket.emit('join:booth-customer',{bid:1});
+
+        socket.on('callOk:customer',function(data){
+          var tnum = $('.pg-order').data('tnum');
+
+          if(tnum === data){
+              alert('곧 서버가 옵니다.');
+          }
+        });
 
         $('#mdl-summary').modal({
             ready: function(val){
@@ -120,7 +129,7 @@
                     sum: sum,
                 },
             }).done(function (rtn) {
-                console.log(rtn);
+                location.href = '/customer/order';
             });
         });
 
@@ -160,6 +169,7 @@
 
             var tnum = $('.pg-order').data('tnum');
             socket.emit('call:server',{bid:1,tnum:tnum});
+            alert('서버가 호출되었습니다.');
         });
     });
 </script>

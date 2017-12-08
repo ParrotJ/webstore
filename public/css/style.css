@@ -144,6 +144,9 @@ body {
   text-align: center;
   color: #fff;
 }
+.menu.tile .table.num {
+  width: 250px;
+}
 .menu.tile .btn-minus{
   position: absolute; left: 0;
   margin: 2% 0 2% 5%;
@@ -171,11 +174,14 @@ body {
   color: #ffac80;
 }
 
-#btn-call_server {
+.btn-haeder-left {
   position: absolute;
   top: 0;  right: 0;
 }
-#btn-call_server i {
+.btn-haeder-left i {
   padding: 1rem;
   color:#fff;
+}
+#btn-cook_server.btn-haeder-left {
+  padding: 1rem;
 }

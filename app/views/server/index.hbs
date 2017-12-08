@@ -1,5 +1,8 @@
 <div class="wrap-tile">
   <h1>서버 테이블</h1>
+  <a id="btn-cook_server" class="btn-haeder-left modal-trigger" href="#mdl-cook">
+    <span id="btn-vue-cook" class="new badge red">\{{num}}</span>
+  </a>
   <div class="row">
       {{#times table_num}}
           <div class="num tile col s4" data-num="{{this}}">
@@ -14,16 +17,43 @@
   </div>
 </div>
 
+<!-- Modal Structure -->
+<div id="mdl-cook" class="modal bottom-sheet">
+    <div id="mdl-cook-body" class="modal-content">
+        <h5>요리현황 - <small>\{{num}}개 조리완료</small></h5>
+        <div class="collection">
+          <a v-for="(item,index) in items" class="collection-item" @click="servingOk(item,index)">
+            <span class="badge">\{{item.tnum}}번 테이블</span>\{{item.name}} : \{{item.num}}인분
+          </a>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">확인</a>
+    </div>
+</div>
+
+
 <script>
     $(document).ready(function () {
+        $('#mdl-cook').modal();
+
+        var cook_state = {
+            num: 0,
+            items: [],
+        };
+
         var socket = io.connect();
-        socket.emit('join:booth',{bid:1});
+        socket.emit('join:booth-server',{bid:1});
         socket.on('call:server',function (data) {
             $('.tile').removeClass('notice-active');
 
             $.map(data,function(num){
                 $('.tile:eq('+(num-1)+')').addClass('notice-active');
             });
+        });
+        socket.on('cookOk:server',function (data) {
+          cook_state.num = data.length;
+          cook_state.items = data;
         });
 
         $(document).on('click','.tile.notice-active',function(e){
@@ -34,5 +64,21 @@
             socket.emit('callOk:server',{bid:1,tnum:tnum});
             alert(tnum+'번 테이블의 호출을 확인하셨습니다.');
         });
+
+        var v_btn_cook = new Vue({
+          el: '#btn-vue-cook',
+          data: function() { return cook_state; }
+        });
+
+        var v_body_cook = new Vue({
+          el: '#mdl-cook-body',
+          data: function() { return cook_state; },
+          methods: {
+            servingOk: function(data,index){
+              socket.emit('servingOk:server',{bid:1,item:data});
+              // Vue.delete(this.items, index);
+            }
+          }
+        })
     });
 </script>

@@ -10,6 +10,7 @@ var r_users = require('./app/routes/users');
 var r_admin = require('./app/routes/admin');
 var r_customer = require('./app/routes/customer');
 var r_server = require('./app/routes/server');
+var r_cook = require('./app/routes/cook');
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use('/users', r_users);
 app.use('/admin', r_admin);
 app.use('/customer', r_customer);
 app.use('/server', r_server);
+app.use('/cook', r_cook);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

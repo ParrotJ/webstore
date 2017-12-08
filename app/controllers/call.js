@@ -4,7 +4,7 @@ const callDAO = require('../models/call.js');
 exports.call = function(data,cb){
     callDAO.call(data).then(function (result) {
         cb(result);
-    }).catch(function () { cb(false) });
+    }).catch(function (r) { console.log(r); cb(false) });
 };
 
 exports.getCall = function(cb){
@@ -23,4 +23,3 @@ exports.okCall = function (data,cb) {
         cb(result);
     }).catch(function (r) { console.log(r); cb(false) });
 };
-

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var io  = require('../../app').io;
+var io  = require('./io').io;
 
 const adminCtrl = require('../controllers/admin.js');
 const orderCtrl = require('../controllers/order.js');
@@ -20,7 +20,12 @@ router.get('/order', function(req, res, next) {
 
 router.put('/order', function(req, res, next) {
     orderCtrl.order(req.body,function (result) {
-        if(result) res.status(200).send();
+        if(result) {
+          orderCtrl.getOrderMenu(function(data){
+            io.sockets.in('booth-cook1').emit('order:cook', data);
+          });
+          res.status(200).send();
+        }
         else res.status(403).send();
     });
 });
