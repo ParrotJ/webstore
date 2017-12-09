@@ -93,6 +93,7 @@ body {
 .bg-container {
   padding: .1px;
   width: 100%;
+  min-width: 800px;
   min-height: 900px;
   background-color: #f5f5f5;
 }
@@ -100,6 +101,7 @@ body {
 .bg-container .container {
   margin: 35px auto 60px;
   min-height: 630px;
+  width: 85%!important;
   border: 1px solid #ccc;
   background: #fff;
 }
@@ -185,4 +187,14 @@ body {
 }
 #btn-cook_server.btn-haeder-left {
   padding: 1rem;
+}
+
+.pg-sales .badge {
+  float:left;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.pg-sales .badge.ok {
+  color : #000;
 }

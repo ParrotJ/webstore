@@ -41,6 +41,10 @@ io.sockets.on('connection', function(socket) {
         accountingCtrl.getStockList(function (data) {
             socket.emit('getStock:accounting', data);
         });
+
+        accountingCtrl.getSalesList(function (data){
+            socket.emit('getSales:accounting', data);
+        })
     });
 
     // Call server
@@ -70,6 +74,10 @@ io.sockets.on('connection', function(socket) {
           orderCtrl.getOrderMenu(function(rtn){
             io.sockets.in('booth-cook' + data.bid).emit('order:cook', rtn);
           });
+
+            accountingCtrl.getSalesList(function (data){
+                io.sockets.in('booth-accounting' + data.bid).emit('getSales:accounting', data);
+            });
         });
       });
     });
@@ -79,6 +87,10 @@ io.sockets.on('connection', function(socket) {
         orderCtrl.getCookOk(data,function(rtn){
           io.sockets.in('booth-server' + data.bid).emit('cookOk:server', rtn);
         });
+
+          accountingCtrl.getSalesList(function (data){
+              io.sockets.in('booth-accounting' + data.bid).emit('getSales:accounting', data);
+          })
       });
     });
 });

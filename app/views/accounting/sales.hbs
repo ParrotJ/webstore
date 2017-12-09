@@ -1,0 +1,69 @@
+<div class="bg-container pg-sales">
+    <div class="container">
+        <h2 class="title">주문 현황</h2>
+        <div class="content">
+            <div class="row">
+                <span style="float:left">태그 설명: </span>
+                <span class="badge red">주문완료</span>
+                <span class="badge blue">조리완료</span>
+                <span class="badge ok">서빙완료</span>
+
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th>테이블</th>
+                        <th>주문 내역</th>
+                        <th>주문 금액</th>
+                        <th>주문 시간</th>
+                    </tr>
+                    </thead>
+                    <tbody class="wrap-item">
+                    <tr v-for="item in data">
+                        <td>\{{item.tnum}}</td>
+                        <td v-html="item.menu"></td>
+                        <td>\{{item.total}}</td>
+                        <td>\{{item.time}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var socket = io.connect();
+        const shareState = {
+            data: []
+        };
+
+        socket.emit('join:booth-accounting',{bid:1});
+        socket.on('getSales:accounting', function (data) {
+            shareState.data = $.map(data,function(item){
+                var menuText = '';
+                $.map(item.menu,function(menu,idx){
+                    if(menu.servingOk) {
+                        menuText += '<span class="badge ok">'+menu.name+' '+menu.num+'</span>';
+                    } else if (menu.cookingOk) {
+                        menuText += '<span class="badge blue">'+menu.name+' '+menu.num+'</span>';
+                    } else {
+                        menuText += '<span class="badge red">'+menu.name+' '+menu.num+'</span>';
+                    }
+
+                    //if(item.menu.length != idx+1) menuText += ', ';
+                });
+                item.menu = menuText;
+            });
+
+            shareState.data = data;
+        });
+
+        new Vue({
+            el: '.wrap-item',
+            data: function() {
+                return shareState;
+            }
+        });
+    });
+</script>

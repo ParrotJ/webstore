@@ -1,7 +1,7 @@
-<div class="bg-container pg-menus">
+<div class="bg-container pg-stock">
     <div class="container">
         <h2 class="title">회계 - 재고 확인</h2>
-        <div class="content">
+        <div class="vue content">
             <div class="row">
                 <table class="highlight">
                     <thead>
@@ -23,8 +23,27 @@
                             <td>\{{item.cost}}</td>
                             <td>\{{item.total}}</td>
                         </tr>
+                        <tr style="border:0">
+                            <td colspan="4"></td>
+                            <th>초기비용</th>
+                            <td>\{{initCost}}</td>
+                        </tr>
+                        <tr style="border:0">
+                            <td colspan="4"></td>
+                            <th>현재매출</th>
+                            <td>\{{sales}}</td>
+                        </tr>
+                        <tr style="border:0">
+                            <td colspan="4"></td>
+                            <th>순이익</th>
+                            <td>\{{netProfit(spending)}}</td>
+                        </tr>
                     </tbody>
                 </table>
+                <div class="input-field col s6">
+                    <input placeholder="추가지출" id="ipt-spending" type="number" class="validate" v-model="spending">
+                    <label for="ipt-spending">추가지출</label>
+                </div>
             </div>
         </div>
     </div>
@@ -38,23 +57,54 @@
 
         var socket = io.connect();
         const shareState = {
-            items: []
+            initCost: 0,
+            spending: 0,
+            sales: 0,
+            items: [],
         };
 
         socket.emit('join:booth-accounting',{bid:1});
         socket.on('getStock:accounting', function (data) {
+            shareState.initCost = 0;
+            shareState.netProfit = 0;
+            shareState.sales = 0;
             shareState.items = $.map(data,function(item){
-                item.cost   = numberWithCommas(item.cost);
-                item.total  = numberWithCommas(item.total);
+                var copy = $.extend({},item);
+                shareState.initCost += item.price*item.init;
+                shareState.sales += item.cost*item.sales;
 
-                return item;
+                copy.cost   = numberWithCommas(item.cost);
+                copy.total  = numberWithCommas(item.total);
+
+                return copy;
             });
+
+            shareState.initCost = numberWithCommas(shareState.initCost);
+            shareState.sales = numberWithCommas(shareState.sales);
         });
 
         new Vue({
-            el: '.wrap-item',
+            el: '.vue.content',
             data: function() {
                 return shareState;
+            },
+            methods: {
+                netProfit: function(ipt){
+                    var sales = ""+this.sales;
+                    sales = parseInt(sales.replace(/[^\d]+/g, ''));
+                    var initCost = ""+this.initCost;
+                    initCost = parseInt(initCost.replace(/[^\d]+/g, ''));
+
+                    return numberWithCommas(sales - ipt - initCost);
+                }
+            },
+            watch: {
+                spending: function(ipt) {
+                    ipt = parseInt(ipt);
+                    if(isNaN(ipt)) ipt = 0;
+
+                    this.netProfit(ipt);
+                }
             }
         });
     });

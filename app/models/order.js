@@ -82,3 +82,23 @@ exports.setServingMenu = function(data) {
       serving_complement: 1,
   });
 }
+
+exports.getOrderList = function(){
+    return knex.transaction(async function (trx) {
+        try {
+            let orders = await trx.select().from('orders').orderByRaw('order_time DESC');
+
+            for(var i = 0; i < orders.length; i++){
+                let id = orders[i].order_id;
+                orders[i].menu = await trx.where('order_id',id).from('orders_menu')
+                    .join('menu','orders_menu.menu_id','menu.menu_id')
+                    .select();
+            }
+
+            return orders;
+        } catch (err) {
+            console.log(err)
+            throw err; //<-- pass exception so that it is thrown out from the callback
+        }
+    });
+}

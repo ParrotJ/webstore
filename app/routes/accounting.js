@@ -10,10 +10,14 @@ router.get('/', function(req, res, next) {
 
 /* GET Stock list. */
 router.get('/stock', function(req, res, next) {
-    accountingCtrl.getStockList(function (data) {
-        res.render('accounting/stock',{items:data});
-    });
+    res.render('accounting/stock');
 });
+
+/* GET Sales list. */
+router.get('/sales', function(req, res, next) {
+    res.render('accounting/sales');
+});
+
 
 
 module.exports = router;

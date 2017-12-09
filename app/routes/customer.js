@@ -29,6 +29,10 @@ router.put('/order', function(req, res, next) {
             accountingCtrl.getStockList(function (data) {
                 io.sockets.in('booth-accounting1').emit('getStock:accounting', data);
             });
+
+            accountingCtrl.getSalesList(function (data){
+                io.sockets.in('booth-accounting1').emit('getSales:accounting', data);
+            })
           res.status(200).send();
         }
         else res.status(403).send();

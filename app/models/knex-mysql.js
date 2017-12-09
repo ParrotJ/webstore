@@ -3,9 +3,9 @@ const knex = require('knex')({
     connection: {
         host : '127.0.0.1',
         user : 'root',
-        password : 'root',
-        database : 'wp_teamproject'
-    }
+password : 'root',
+    database : 'wp_teamproject'
+}
 });
 
 module.exports = knex;
