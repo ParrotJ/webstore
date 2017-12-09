@@ -42,7 +42,7 @@
         };
 
         socket.emit('join:booth-accounting',{bid:1});
-        socket.on('initStock:accounting', function (data) {
+        socket.on('getStock:accounting', function (data) {
             shareState.items = $.map(data,function(item){
                 item.cost   = numberWithCommas(item.cost);
                 item.total  = numberWithCommas(item.total);

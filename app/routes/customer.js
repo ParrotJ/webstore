@@ -27,7 +27,7 @@ router.put('/order', function(req, res, next) {
             });
 
             accountingCtrl.getStockList(function (data) {
-                io.sockets.in('booth-accounting1').emit('initStock:accounting', data);
+                io.sockets.in('booth-accounting1').emit('getStock:accounting', data);
             });
           res.status(200).send();
         }

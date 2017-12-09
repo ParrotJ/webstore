@@ -39,7 +39,7 @@ io.sockets.on('connection', function(socket) {
         socket.join('booth-accounting' + data.bid);
 
         accountingCtrl.getStockList(function (data) {
-            socket.emit('initStock:accounting', data);
+            socket.emit('getStock:accounting', data);
         });
     });
 
