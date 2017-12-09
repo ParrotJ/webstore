@@ -10,6 +10,7 @@ exports.setOrder = function(data) {
 
     return knex('orders').insert(ipt);
 }
+
 exports.orderMenu = function(data) {
     var ipt = _.map(data.data,function (menu) {
        return {
@@ -18,7 +19,24 @@ exports.orderMenu = function(data) {
            quantity: menu.num,
        };
     });
-    return knex('orders_menu').insert(ipt);
+
+    return knex.transaction(async function (trx) {
+      try {
+        for(let i = 0; i < ipt.length; i++){
+          let item = ipt[i];
+          let row = await trx.where('menu_id',item.menu_id).select('stock_quantity').from('menu');
+          const stock = row[0].stock_quantity - item.quantity;
+
+          await trx.where('menu_id',item.menu_id).update('stock_quantity',stock).from('menu');
+          await trx.insert(item).from('orders_menu');
+        }
+
+        return true;
+      } catch (err) {
+          console.log(err)
+          throw err; //<-- pass exception so that it is thrown out from the callback
+      }
+    });
 }
 
 exports.getOrderMenu = function(){
@@ -53,7 +71,6 @@ exports.getCookOkMenu = function(data) {
           .where(ipt)
           .select('orders_menu.order_id','orders_menu.menu_id','orders.table_num', 'menu.menu_name', 'orders_menu.quantity');
 }
-
 
 exports.setServingMenu = function(data) {
   var ipt = {
