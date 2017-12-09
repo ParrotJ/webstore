@@ -40,6 +40,7 @@
 
         socket.emit('join:booth-accounting',{bid:1});
         socket.on('getSales:accounting', function (data) {
+            console.log(data);
             shareState.data = $.map(data,function(item){
                 var menuText = '';
                 $.map(item.menu,function(menu,idx){

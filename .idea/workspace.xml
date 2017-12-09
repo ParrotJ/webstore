@@ -14,30 +14,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="stock.hbs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/accounting/stock.hbs">
+      <file leaf-file-name="io.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/routes/io.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="97" column="49" lean-forward="false" selection-start-line="97" selection-start-column="49" selection-end-line="97" selection-end-column="49" />
+            <state relative-caret-position="819">
+              <caret line="90" column="96" lean-forward="false" selection-start-line="90" selection-start-column="96" selection-end-line="90" selection-end-column="96" />
               <folding>
-                <element signature="n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#tr#2;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#tr#3;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#2090#2172#0#HTML" expanded="false" />
+                <element signature="e#395#690#0" expanded="false" />
+                <element signature="e#746#803#0" expanded="false" />
+                <element signature="e#855#1104#0" expanded="false" />
+                <element signature="e#1526#1734#0" expanded="false" />
+                <element signature="e#1807#2103#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="accounting.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/accounting.js">
+      <file leaf-file-name="stock.hbs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/accounting/stock.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="18" column="32" lean-forward="false" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="32" />
-              <folding>
-                <element signature="e#819#1596#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="484">
+              <caret line="105" column="40" lean-forward="true" selection-start-line="105" selection-start-column="40" selection-end-line="105" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sales.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/accounting/sales.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="42" column="30" lean-forward="false" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -124,13 +132,13 @@
         <option value="$PROJECT_DIR$/app/routes/accounting.js" />
         <option value="$PROJECT_DIR$/app/models/order.js" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/app/views/accounting/sales.hbs" />
-        <option value="$PROJECT_DIR$/app/routes/io.js" />
         <option value="$PROJECT_DIR$/app/routes/server.js" />
         <option value="$PROJECT_DIR$/app/routes/customer.js" />
         <option value="$PROJECT_DIR$/app/models/knex-mysql.js" />
         <option value="$PROJECT_DIR$/app/controllers/accounting.js" />
         <option value="$PROJECT_DIR$/app/views/accounting/stock.hbs" />
+        <option value="$PROJECT_DIR$/app/views/accounting/sales.hbs" />
+        <option value="$PROJECT_DIR$/app/routes/io.js" />
       </list>
     </option>
   </component>
@@ -181,18 +189,6 @@
               <item name="Workspace" type="b2602c69:ProjectViewProjectNode" />
               <item name="Workspace" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Workspace" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Workspace" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Workspace" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Workspace" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -201,13 +197,6 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="accounting" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Workspace" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Workspace" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Workspace" type="b2602c69:ProjectViewProjectNode" />
@@ -271,12 +260,12 @@
       <updated>1512572431870</updated>
       <workItem from="1512572433462" duration="713000" />
       <workItem from="1512618248388" duration="31053000" />
-      <workItem from="1512828133789" duration="11450000" />
+      <workItem from="1512828133789" duration="12067000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43216000" />
+    <option name="totallyTimeSpent" value="43833000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1242" y="0" width="1263" height="1087" extended-state="0" />
@@ -544,16 +533,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/accounting/sales.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="50" lean-forward="false" selection-start-line="5" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/order.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -610,20 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/io.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="90" column="10" lean-forward="false" selection-start-line="90" selection-start-column="10" selection-end-line="92" selection-end-column="12" />
-          <folding>
-            <element signature="e#395#690#0" expanded="false" />
-            <element signature="e#746#803#0" expanded="false" />
-            <element signature="e#855#1104#0" expanded="false" />
-            <element signature="e#1526#1734#0" expanded="false" />
-            <element signature="e#1807#2103#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/knex-mysql.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -650,17 +615,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/accounting/sales.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="42" column="30" lean-forward="false" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/io.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="819">
+          <caret line="90" column="96" lean-forward="false" selection-start-line="90" selection-start-column="96" selection-end-line="90" selection-end-column="96" />
+          <folding>
+            <element signature="e#395#690#0" expanded="false" />
+            <element signature="e#746#803#0" expanded="false" />
+            <element signature="e#855#1104#0" expanded="false" />
+            <element signature="e#1526#1734#0" expanded="false" />
+            <element signature="e#1807#2103#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/accounting/stock.hbs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="97" column="49" lean-forward="false" selection-start-line="97" selection-start-column="49" selection-end-line="97" selection-end-column="49" />
-          <folding>
-            <element signature="n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#tr#2;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#tr#3;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#2090#2172#0#HTML" expanded="false" />
-          </folding>
+        <state relative-caret-position="484">
+          <caret line="105" column="40" lean-forward="true" selection-start-line="105" selection-start-column="40" selection-end-line="105" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
