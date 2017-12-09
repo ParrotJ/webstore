@@ -1,0 +1,61 @@
+<div class="bg-container pg-menus">
+    <div class="container">
+        <h2 class="title">회계 - 재고 확인</h2>
+        <div class="content">
+            <div class="row">
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th>메뉴 이름</th>
+                        <th>초기 수량</th>
+                        <th>현재 재고</th>
+                        <th>판매량</th>
+                        <th>단가</th>
+                        <th>총 판매액</th>
+                    </tr>
+                    </thead>
+                    <tbody class="wrap-item">
+                        <tr v-for="item in items">
+                            <td>\{{item.name}}</td>
+                            <td>\{{item.init}}</td>
+                            <td>\{{item.stock}}</td>
+                            <td>\{{item.sales}}</td>
+                            <td>\{{item.cost}}</td>
+                            <td>\{{item.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        var socket = io.connect();
+        const shareState = {
+            items: []
+        };
+
+        socket.emit('join:booth-accounting',{bid:1});
+        socket.on('initStock:accounting', function (data) {
+            shareState.items = $.map(data,function(item){
+                item.cost   = numberWithCommas(item.cost);
+                item.total  = numberWithCommas(item.total);
+
+                return item;
+            });
+        });
+
+        new Vue({
+            el: '.wrap-item',
+            data: function() {
+                return shareState;
+            }
+        });
+    });
+</script>

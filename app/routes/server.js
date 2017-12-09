@@ -4,6 +4,7 @@ var io  = require('./io').io;
 
 const adminCtrl = require('../controllers/admin.js');
 const orderCtrl = require('../controllers/order.js');
+const accountingCtrl = require('../controllers/accounting.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,6 +25,10 @@ router.put('/order', function(req, res, next) {
           orderCtrl.getOrderMenu(function(data){
             io.sockets.in('booth-cook1').emit('order:cook', data);
           });
+
+            accountingCtrl.getStockList(function (data) {
+                io.sockets.in('booth-accounting1').emit('initStock:accounting', data);
+            });
           res.status(200).send();
         }
         else res.status(403).send();

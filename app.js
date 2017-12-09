@@ -11,6 +11,7 @@ var r_admin = require('./app/routes/admin');
 var r_customer = require('./app/routes/customer');
 var r_server = require('./app/routes/server');
 var r_cook = require('./app/routes/cook');
+var r_accounting = require('./app/routes/accounting');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', r_index);
 app.use('/users', r_users);
 app.use('/admin', r_admin);
+app.use('/accounting', r_accounting);
 app.use('/customer', r_customer);
 app.use('/server', r_server);
 app.use('/cook', r_cook);

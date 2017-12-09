@@ -4,6 +4,7 @@ var io = socket();
 const adminCtrl = require('../controllers/admin.js');
 const callCtrl = require('../controllers/call.js');
 const orderCtrl = require('../controllers/order.js');
+const accountingCtrl = require('../controllers/accounting.js');
 
 io.sockets.on('connection', function(socket) {
     // Join booth
@@ -34,6 +35,13 @@ io.sockets.on('connection', function(socket) {
       });
     });
 
+    socket.on('join:booth-accounting',function(data){
+        socket.join('booth-accounting' + data.bid);
+
+        accountingCtrl.getStockList(function (data) {
+            socket.emit('initStock:accounting', data);
+        });
+    });
 
     // Call server
     socket.on('call:server', function(data) {

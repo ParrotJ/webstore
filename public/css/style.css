@@ -60,6 +60,7 @@ body {
 .tile-inner .text {
   position: absolute;
   left: 10px; bottom: 10px;
+  font-size: 1.1rem;
   color: #fff;
 }
 
